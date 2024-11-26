@@ -1,14 +1,22 @@
-version: '2.29.7'
 services:
   mariadb:
-    image: mariadb:latest
+    image: mariadb:11.1
     container_name: mariadb
-    restart: unless-stopped
     environment:
-      - MARIADB_ROOT_PASSWORD=password
-    
-  adminer:
-    image: adminer
-    restart: always
+      - MARIADB_ROOT_PASSWORD=admin
+      - MARIADB_DATABASE=my_db
+      - MARIADB_USER=bkotwica
+      - MARIADB_PASSWORD=bkotwica
+    volumes:
+      - mariadb_volume:/var/lib/mariadb
+    networks:
+      - mariadb_network
     ports:
-      - 8081:8080
+      - 3307:3306
+
+volumes:
+  mariadb_volume:
+
+networks:
+  mariadb_network:
+    driver: bridge

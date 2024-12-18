@@ -10,6 +10,6 @@ echo "FLUSH PRIVILEGES;" >> db1.sql
 
 mysql < db1.sql
 
-# kill $(cat /var/run/mysqld/mysqld.pid)
+kill $(cat /var/run/mysqld/mysqld.pid)
 
 mysqld

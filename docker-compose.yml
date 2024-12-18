@@ -4,7 +4,7 @@ services:
     build: ./mariadb/.
     image: mariadb:10.4
     volumes:
-      - mariadb_volume:/var/lib/mysqlx
+      - mariadb_volume:/var/lib/mysqld
     env_file:
       - .env
     networks:

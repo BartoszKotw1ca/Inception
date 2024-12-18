@@ -1,18 +1,15 @@
-# Use Alpine as the base image
-FROM alpine:3.20
 
-WORKDIR /app
+FROM debian:buster
 
-# Copy the main shell script to image
-COPY ["setup.sh", "/app"]
 
-RUN \
-    # Add MariaDB packages
-    apk add --no-cache \
-        mariadb \
-        mariadb-client; \
-    # Give execute permission to main.sh
-    chmod +x /app/setup.sh
+RUN apt-get update -y && apt-get install mariadb-server -y
 
-# Specify the start point of our image
-ENTRYPOINT ["/app/setup.sh"]
+# COPY ./tools/50-server.cnf /etc/mysql/mariadb.conf.d/
+
+
+COPY setup.sh /
+
+RUN chmod 777 /setup.sh
+
+
+CMD ["/setup.sh"]

@@ -1,0 +1,5 @@
+w kontenerze w tej lokalizacji znajduje sie plik konfiguracyjny mariadb: /etc/mysql
+komenda zeby wejsc do bash w kontenerze: docker exec -it id_contenera bash
+komenda zeby wejsc do bazy danych w kontenerze: docker exec -it id_contenera mysql -u root -p
+komenda zeby polaczyc sie z mariadb:  docker run -d -p 3306:3306 nazwa_obrazu
+budowanie obrazu dla mariadb: docker build -t mariadb-con .

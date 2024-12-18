@@ -1,49 +1,15 @@
-#!/bin/ash
+#!/bin/bash
 
-set -e
+service mysql start 
 
-signal_terminate_trap() {
-    #
-    # Shutdown MariaDB with mariadb-admin
-    # https://mariadb.com/kb/en/mariadb-admin/
-    mariadb-admin shutdown &
-    #
-    # Wait for mariadb-admin until sucessfully done (exit)
-    wait $!
-    echo "MariaDB shut down successfully"
-}
+echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE ;" > db1.sql
+echo "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' ;" >> db1.sql
+echo "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' ;" >> db1.sql
+echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD' ;" >> db1.sql
+echo "FLUSH PRIVILEGES;" >> db1.sql
 
-trap "signal_terminate_trap" SIGTERM
+mysql < db1.sql
 
-# Run
-if [ "$REQUEST" == "run" ]; then
-    echo "Starting MariaDB ..."
-    #
-    # Run MariaDB with exec bash command
-    exec mariadbd &
-    #
-    # Wait for MariaDB until stopped by Docker
-    wait $!
-    exit 1
-fi
+# kill $(cat /var/run/mysqld/mysqld.pid)
 
-# Initialize
-if [ "$REQUEST" == "initialize" ]; then
-    initialize_status="MariaDB is already initialized"
-
-    if [ ! -f "$DIR_DATA/ibdata1" ]; then
-        initialize_status="MariaDB initialization done"
-
-        # Initialize MariaDB with mariadb-install-db
-        # https://mariadb.com/kb/en/mariadb-install-db/
-        mariadb-install-db \
-            --user=$USER \
-            --datadir=$DIR_DATA \
-            --auth-root-authentication-method=socket &
-        #
-        # Wait for mariadb-install-db until sucessfully done (exit)
-        wait $!
-    fi
-
-    echo $initialize_status
-fi
+mysqld

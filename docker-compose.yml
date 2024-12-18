@@ -1,21 +1,24 @@
 services:
   mariadb:
-    image: mariadb:11.1
     container_name: mariadb
-    environment:
-      - MARIADB_ROOT_PASSWORD=admin
-      - MARIADB_DATABASE=my_db
-      - MARIADB_USER=bkotwica
-      - MARIADB_PASSWORD=bkotwica
+    build: ./mariadb/.
+    image: mariadb:10.4
     volumes:
-      - mariadb_volume:/var/lib/mariadb
+      - mariadb_volume:/var/lib/mysqlx
+    env_file:
+      - .env
     networks:
       - mariadb_network
-    ports:
-      - 3307:3306
+    restart: always
 
 volumes:
   mariadb_volume:
+    name: mariadb_volume
+    driver: local
+    driver_opts:
+            device: /home/bkotwica/Inception/mariadb
+            o: bind
+            type: none
 
 networks:
   mariadb_network:

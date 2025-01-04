@@ -21,7 +21,7 @@
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', 'my_database' );
-define( 'DB_USER', 'my_user' );
+define( 'DB_USER', 'user' );
 define( 'DB_PASSWORD', 'my_password' );
 
 /** MySQL hostname */
@@ -52,9 +52,6 @@ define('AUTH_SALT',        'xNmM/|Ml.e}pCPG$n~gVKQ!!J<f:xwPrc|! 1Ac/|DRTpuL|Y<*|
 define('SECURE_AUTH_SALT', '5aqQ<ANx!l>O6s_4-jt6$<.4R.{g>$P]7S7:&Sz*w!E=U|Wd-7KK~5-e1]q43-rD');
 define('LOGGED_IN_SALT',   'x[lE_pN2Thb>*TzVky1x4FE>5S4mV1DPd-`@)[EtOj=h+VlB/!xx&]RiYBG^O>V$');
 define('NONCE_SALT',       '%Ch[92C2mme3|/! H_W&aP6LRcfJ)!KxEUA.qt@{c{0HvK}]@,9GTj%!Ek?i2|jS');
-
-define( 'WP_REDIS_HOST', 'redis' );
-define( 'WP_REDIS_PORT', 6379 );     
 
 
 define('WP_CACHE', true);

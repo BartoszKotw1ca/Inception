@@ -1,8 +1,0 @@
-docker ps - wyswietlanie dzialajcych kontenerow; -a wyswietlanie wszystkich kontenerow
-docker images - wyswietlanie wszystkich zbudowanych images
-docker build --no-cache -t my_python_app . - budowanie images, flaga ktora robie wszysko od nowa, jak make re, -t dodaje tag
-docker run -it --rm my_python_app - odpalanie zbudowanego image czyli kontener, --rm usuwa automatycznie kontenery po zakonczeniu dzialania
-docker rm - usuwa kontenery
-docker rmi - usuwa obrazy
-
-

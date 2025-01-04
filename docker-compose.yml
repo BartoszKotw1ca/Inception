@@ -1,4 +1,30 @@
 services:
+  nginx:
+    container_name: nginx
+    build: ./nginx/.
+    image: nginx:42
+    ports:
+     - "443:443"
+    depends_on:
+      - wordpress
+    volumes:
+     - wordpress_volume:/var/www/html
+    networks:
+      - network1
+    env_file:
+      - .env
+    restart: always
+  mariadb:
+    container_name: mariadb
+    build: ./mariadb/.
+    image: mariadb:42
+    volumes:
+      - mariadb_volume:/var/lib/mysqld
+    env_file:
+      - .env
+    networks:
+      - network1
+    restart: always
   wordpress:
     container_name: wordpress
     build: ./wordpress/.
@@ -12,35 +38,22 @@ services:
     networks:
       - network1
     restart: always
-  mariadb:
-    container_name: mariadb
-    build: ./mariadb/.
-    image: mariadb:10.4
-    volumes:
-      - mariadb_volume:/var/lib/mysqld
-    env_file:
-      - .env
-    networks:
-      - network1
-    restart: always
 
 volumes:
   wordpress_volume:
     name: wordpress_volume
     driver: local
     driver_opts:
-      device: /home/bkotwica/Inception/wordpressv
+      device: /home/bkotwica/data/wordpress
       o: bind
       type: none
   mariadb_volume:
     name: mariadb_volume
     driver: local
     driver_opts:
-      device: /home/bkotwica/Inception/mariadbv
+      device: /home/bkotwica/data/mariadb
       o: bind
       type: none
 
 networks:
   network1:
-    name: network1
-    driver: bridge

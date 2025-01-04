@@ -14,17 +14,6 @@ services:
     env_file:
       - .env
     restart: always
-  mariadb:
-    container_name: mariadb
-    build: ./mariadb/.
-    image: mariadb:42
-    volumes:
-      - mariadb_volume:/var/lib/mysqld
-    env_file:
-      - .env
-    networks:
-      - network1
-    restart: always
   wordpress:
     container_name: wordpress
     build: ./wordpress/.
@@ -33,6 +22,17 @@ services:
       - mariadb
     volumes:
       - wordpress_volume:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - network1
+    restart: always
+  mariadb:
+    container_name: mariadb
+    build: ./mariadb/.
+    image: mariadb:42
+    volumes:
+      - mariadb_volume:/var/lib/mysqld
     env_file:
       - .env
     networks:
